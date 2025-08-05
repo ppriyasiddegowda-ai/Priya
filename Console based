@@ -1,1 +1,201 @@
+# Simple To-Do List App
+
+tasks = []
+
+while True:
+    print("\n===== TO-DO LIST =====")
+    print("1. View Tasks")
+    print("2. Add Task")
+    print("3. Delete Task")
+    print("4. Exit")
+
+    choice = input("Enter your choice (1-4): ")
+
+    if choice == '1':
+        if not tasks:
+            print("No tasks yet.")
+        else:
+            print("Tasks:")
+            for i, task in enumerate(tasks, 1):
+                print(f"{i}. {task}")
+
+    elif choice == '2':
+        task = input("Enter a task: ")
+        tasks.append(task)
+        print("Task added.")
+
+    elif choice == '3':
+        if not tasks:
+            print("No tasks to delete.")
+        else:
+            for i, task in enumerate(tasks, 1):
+                print(f"{i}. {task}")
+            try:
+                task_no = int(input("Enter task number to delete: "))
+                if 1 <= task_no <= len(tasks):
+                    removed = tasks.pop(task_no - 1)
+                    print(f"Deleted task: {removed}")
+                else:
+                    print("Invalid task number.")
+            except ValueError:
+                print("Please enter a valid number.")
+
+    elif choice == '4':
+        print("Goodbye!")
+        break
+
+    else:
+        print("Invalid choice. Please try again.")
+
+
+
+
+
+
+
+
+
+1. How do you open and write to a file in Python?
+
+Use open() with write ("w") or append ("a") mode:
+
+# Using write mode (creates or overwrites file)
+file = open("notes.txt", "w")
+file.write("Hello, world!")
+file.close()
+
+Or better:
+
+with open("notes.txt", "w") as file:
+    file.write("Hello, world!")
+
+
+
+
+2. What are common file modes?
+
+Mode	Description
+
+'r'	Read (default). File must exist.
+'w'	Write. Creates or overwrites file.
+'a'	Append. Adds data to end of file.
+'x'	Create. Error if file exists.
+'r+'	Read and write.
+
+
+You can also add 'b' for binary mode or 't' for text (default).
+
+
+
+
+3. What’s the use of .strip()?
+
+.strip() removes unwanted spaces, tabs, or newlines from the start and end of a string.
+
+text = "  Hello\n"
+clean = text.strip()  # "Hello"
+
+
+
+
+4. How do lists work in Python?
+
+A list is a collection of items stored in a single variable.
+
+fruits = ["apple", "banana", "mango"]
+print(fruits[0])  # Output: apple
+
+Lists are ordered (items have positions)
+
+Can be changed (add/remove items)
+
+Allow duplicates
+
+
+
+
+
+5. What is the difference between append() and insert()?
+
+append() adds an item to the end:
+
+
+fruits.append("grape")
+
+insert(index, item) adds at a specific position:
+
+
+fruits.insert(1, "orange")  # inserts at index 1
+
+
+
+
+6. How can you remove elements from a list?
+
+remove(value) – removes the first matching value
+
+pop(index) – removes by index (or last item if no index)
+
+clear() – removes all items
+
+
+Example:
+
+fruits.remove("banana")
+fruits.pop(0)
+fruits.clear()
+
+
+
+
+7. What are context managers (with statement)?
+
+They handle resource management like opening/closing files automatically.
+
+with open("file.txt", "r") as f:
+    data = f.read()
+# File is closed automatically here
+
+
+
+
+8. How do you loop through a file line by line?
+
+with open("file.txt", "r") as file:
+    for line in file:
+        print(line.strip())
+
+This reads each line one at a time.
+
+
+
+
+9. What is a data structure?
+
+A data structure is a way to store and organize data in memory.
+
+Examples:
+
+List – ordered collection
+
+Dictionary – key-value pairs
+
+Set – unique unordered items
+
+Tuple – ordered, unchangeable items
+
+
+
+
+
+10. What happens if the file doesn't exist?
+
+If opened in read mode 'r', Python shows:
+
+
+FileNotFoundError
+
+If opened in write 'w' or append 'a', Python creates the file automatically.
+
+
 
