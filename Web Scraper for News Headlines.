@@ -1,0 +1,167 @@
+import requests
+from bs4 import BeautifulSoup
+
+def scrape_and_save_headlines():
+    url = "https://www.bbc.com/news"
+
+    try:
+        # Get the page content
+        response = requests.get(url)
+        response.raise_for_status()  # Raise exception for bad status
+
+        # Parse the page
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        # Extract headlines from <h3> tags
+        headlines = []
+        for h3_tag in soup.find_all('h3'):
+            headline = h3_tag.get_text(strip=True)
+            if headline and headline not in headlines:
+                headlines.append(headline)
+
+        # Save top 10 headlines to file
+        with open("top_headlines.txt", "w", encoding="utf-8") as file:
+            for i, title in enumerate(headlines[:10], 1):
+                file.write(f"{i}. {title}\n")
+
+        print("✅ Headlines successfully saved to 'top_headlines.txt'.")
+
+    except Exception as e:
+        print("❌ Error occurred:", e)
+
+# Run the function
+scrape_and_save_headlines()
+
+
+
+
+
+
+1. What is a GET request?
+
+A GET request is an HTTP request used to retrieve data from a server.
+In Python (with requests), it looks like:
+
+response = requests.get("https://example.com")
+
+It asks the website to send back the web page or data.
+
+
+
+
+2. How do you install external packages in Python?
+
+You use the pip command in your terminal or command prompt.
+For example:
+
+pip install requests beautifulsoup4
+
+
+
+
+3. What is a User-Agent in HTTP?
+
+A User-Agent is a string that tells the server who is making the request — for example, a browser, a bot, or a script.
+
+headers = {"User-Agent": "Mozilla/5.0"}
+
+Some websites block requests without a valid User-Agent.
+
+
+
+
+4. What is soup.find_all() used for?
+
+In BeautifulSoup, soup.find_all() is used to find all HTML elements that match a specific tag or condition.
+
+soup.find_all('h3')  # Finds all <h3> tags
+
+
+
+
+5. What are the risks of web scraping?
+
+Legal risks (violating terms of service)
+
+IP blocking by the website
+
+Site structure changes breaking your code
+
+Data inaccuracy
+
+Heavy load on websites if not throttled
+
+
+
+
+
+6. What’s the difference between id and class in HTML?
+
+Attribute	Purpose	Unique?
+
+id	Identifies one unique element	✅ Yes
+class	Groups similar elements	❌ No (can repeat)
+
+
+Example:
+
+<div id="header"></div>
+<div class="news-item"></div>
+
+
+
+
+7. What is an HTML tag?
+
+An HTML tag is a piece of code that defines the structure of a web page. Example:
+
+<h1>Headline</h1>
+
+<h1> is a tag for a main heading. Tags often come in opening and closing pairs.
+
+
+
+
+8. What does .text return in BeautifulSoup?
+
+.text returns only the text content inside an HTML tag, with all HTML code removed.
+
+tag = soup.find('h3')
+print(tag.text)  # Just the visible text
+
+
+
+
+9. What is a try-except block?
+
+A try-except block is used to handle errors in Python safely.
+
+try:
+    x = 10 / 0
+except ZeroDivisionError:
+    print("Cannot divide by zero.")
+
+
+
+
+10. What are HTTP status codes?
+
+They indicate the result of an HTTP request.
+
+Code	Meaning
+
+200	OK (Success)
+404	Not Found
+403	Forbidden
+500	Server Error
+301	Moved Permanently
+
+
+Use .status_code in Python:
+
+response = requests.get(url)
+print(response.status_code)
+
+
+
+
