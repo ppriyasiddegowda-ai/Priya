@@ -1,0 +1,205 @@
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+# Sample in-memory database (dictionary)
+users = {
+    1: {"name": "Alice", "email": "alice@example.com"},
+    2: {"name": "Bob", "email": "bob@example.com"}
+}
+
+# GET all users
+@app.route('/users', methods=['GET'])
+def get_users():
+    return jsonify(users)
+
+# GET a single user by ID
+@app.route('/users/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    if user_id in users:
+        return jsonify(users[user_id])
+    return jsonify({"error": "User not found"}), 404
+
+# POST - Add new user
+@app.route('/users', methods=['POST'])
+def create_user():
+    data = request.get_json()
+    if not data or "name" not in data or "email" not in data:
+        return jsonify({"error": "Invalid data"}), 400
+    new_id = max(users.keys()) + 1 if users else 1
+    users[new_id] = {"name": data["name"], "email": data["email"]}
+    return jsonify({"message": "User created", "id": new_id}), 201
+
+# PUT - Update user
+@app.route('/users/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    if user_id not in users:
+        return jsonify({"error": "User not found"}), 404
+    data = request.get_json()
+    users[user_id].update(data)
+    return jsonify({"message": "User updated"})
+
+# DELETE - Remove user
+@app.route('/users/<int:user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    if user_id not in users:
+        return jsonify({"error": "User not found"}), 404
+    del users[user_id]
+    return jsonify({"message": "User deleted"})
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+
+
+
+
+
+
+1. What is Flask?
+Flask is a lightweight web framework in Python that helps you build web applications and APIs quickly.
+
+Minimal, flexible, and easy to learn.
+
+Often used for REST APIs, small web apps, and prototypes.
+
+
+
+
+
+2. What is REST?
+REST (Representational State Transfer) is a style of designing APIs based on rules:
+
+Uses standard HTTP methods (GET, POST, PUT, DELETE)
+
+Works with resources identified by URLs
+
+Often returns data in JSON format
+
+Is stateless (server doesn’t remember client state between requests)
+
+
+
+
+
+3. Difference between GET and POST?
+
+Feature	GET	POST
+
+Purpose	Fetch data	Send data to server
+Data sent in	URL query parameters	Request body
+Visible in URL?	Yes	No
+Use case	Reading data	Creating or submitting data
+
+
+
+
+
+4. How does a Flask route work?
+
+A route is a URL path that triggers a specific Python function.
+
+In Flask, you use the @app.route() decorator to define it.
+Example:
+
+
+@app.route('/hello')
+def say_hello():
+    return "Hello!"
+
+Visiting /hello runs say_hello().
+
+
+
+
+5. What is request.json?
+
+request.json gives you the JSON data sent in an API request body.
+Example:
+
+
+data = request.get_json()
+name = data["name"]
+
+
+
+
+6. What are status codes like 200, 404?
+HTTP status codes tell the client what happened:
+
+200 OK – Request successful
+
+201 Created – Resource created
+
+400 Bad Request – Client sent invalid data
+
+404 Not Found – Resource not found
+
+500 Internal Server Error – Server problem
+
+
+
+
+
+7. How do you run a Flask app?
+
+1. Save your code in app.py
+
+
+2. Install Flask:
+
+pip install flask
+
+
+3. Run:
+
+python app.py
+
+
+4. Open in browser: http://127.0.0.1:5000
+
+
+
+
+
+
+8. What is JSON?
+
+JavaScript Object Notation – lightweight text format for data exchange.
+
+Easy for humans to read, easy for machines to parse.
+Example:
+
+
+{
+  "name": "Alice",
+  "email": "alice@example.com"
+}
+
+
+
+
+9. How to test an API?
+
+Use Postman (GUI tool)
+
+Use curl in terminal
+
+Use automated tests with pytest or unittest
+
+
+
+
+
+10. Can we use a database instead of memory?
+✅ Yes!
+
+You can use SQLite, MySQL, PostgreSQL, or others.
+
+With Flask, you often use SQLAlchemy or Flask-SQLAlchemy to connect and store data permanently.
+
+
+
+
+
