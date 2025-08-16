@@ -1,0 +1,168 @@
+import os
+from PIL import Image
+
+# -------- CONFIGURATION --------
+input_folder = "input_images"     # folder with original images
+output_folder = "output_images"   # folder where resized images will be saved
+new_size = (800, 600)             # width, height
+output_format = "JPEG"            # "JPEG", "PNG", etc.
+# --------------------------------
+
+# Create output folder if it doesn't exist
+os.makedirs(output_folder, exist_ok=True)
+
+# Loop through all files in input folder
+for filename in os.listdir(input_folder):
+    if filename.lower().endswith((".png", ".jpg", ".jpeg", ".bmp", ".gif", ".tiff")):
+        img_path = os.path.join(input_folder, filename)
+        img = Image.open(img_path)
+
+        # Resize image
+        img_resized = img.resize(new_size, Image.Resampling.LANCZOS)
+
+        # Get new filename (with chosen format extension)
+        base_name = os.path.splitext(filename)[0]
+        output_path = os.path.join(output_folder, f"{base_name}.{output_format.lower()}")
+
+        # Save in desired format
+        img_resized.save(output_path, output_format)
+
+        print(f"Processed: {filename} → {output_path}")
+
+print("✅ All images processed and saved.")
+
+
+
+
+
+
+
+
+---
+
+1. What is PIL/Pillow?
+
+PIL (Python Imaging Library) was the original library for image processing in Python.
+
+It became outdated, and Pillow is its modern fork that is actively maintained.
+
+Pillow allows you to open, manipulate, resize, filter, and save many image formats (JPEG, PNG, GIF, BMP, TIFF, etc.).
+
+
+
+---
+
+2. How do you open and save images?
+With Pillow (from PIL import Image):
+
+img = Image.open("picture.jpg")   # open
+img.save("new_picture.png")       # save (can change format)
+
+
+---
+
+3. What is the resize() method?
+
+resize() creates a new image with the specified size.
+Example:
+
+
+resized_img = img.resize((800, 600))
+
+By default, it may lose quality. Use resampling filters like Image.Resampling.LANCZOS for better quality.
+
+
+
+---
+
+4. How do you read all files in a directory?
+Using the os module:
+
+import os
+
+for filename in os.listdir("my_folder"):
+    print(filename)   # prints all files
+
+
+---
+
+5. What is the os module?
+
+A built-in Python module that lets you interact with the operating system.
+
+Used for file paths, directory management, environment variables, etc.
+Examples:
+
+os.listdir(path) → list files
+
+os.makedirs(folder) → create folder
+
+os.path.join(path1, path2) → build safe file paths
+
+
+
+---
+
+6. How do you change file formats (e.g., JPG to PNG)?
+Just open and save in a new format:
+
+img = Image.open("photo.jpg")
+img.save("photo.png", "PNG")
+
+
+---
+
+7. What is a pixel?
+
+A pixel is the smallest unit of an image (a tiny square of color).
+
+Digital images are made of grids of pixels, each storing RGB values (Red, Green, Blue).
+
+
+
+---
+
+8. What’s the use of try-except here?
+
+Used to handle errors gracefully (like if a file is corrupted or not an image).
+Example:
+
+
+try:
+    img = Image.open("file.jpg")
+except Exception as e:
+    print("Error:", e)
+
+This prevents the whole script from crashing when one file fails.
+
+
+---
+
+9. How can you make the app dynamic?
+
+Allow user input for size, folder, or format instead of hardcoding.
+
+Example: use input() or command-line arguments (argparse):
+
+
+python resize.py --input myfolder --output resized --size 800 600 --format PNG
+
+
+---
+
+10. Can this be extended to GUI?
+
+Yes ✅, you can add a graphical interface using libraries like:
+
+Tkinter (built into Python, simple UI)
+
+PyQt / PySide (more advanced, professional look)
+
+Kivy (for cross-platform apps, even mobile)
+
+
+The GUI would let users select a folder, choose size, and format with buttons and dialogs.
+
+
+
+---
