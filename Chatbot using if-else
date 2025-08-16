@@ -1,0 +1,193 @@
+# Simple Rule-Based Chatbot
+
+def chatbot_response(user_input):
+    user_input = user_input.lower()
+
+    # Rule-based responses
+    if "hello" in user_input or "hi" in user_input:
+        return "Hello! How can I help you today?"
+    elif "how are you" in user_input:
+        return "I'm just a bot, but I'm doing great! How about you?"
+    elif "your name" in user_input:
+        return "I'm a simple chatbot created in Python."
+    elif "bye" in user_input:
+        return "Goodbye! Have a nice day."
+    elif "help" in user_input:
+        return "I can respond to greetings, tell you my name, and chat a little."
+    else:
+        return "Sorry, I don't understand that. Can you rephrase?"
+
+def main():
+    print("🤖 Chatbot: Hello! Type 'bye' to exit.")
+    while True:
+        user_input = input("You: ")
+        response = chatbot_response(user_input)
+        print("🤖 Chatbot:", response)
+        if "bye" in user_input.lower():
+            break
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+
+---
+
+1. How do you collect user input?
+
+In Python, you use the input() function:
+
+
+name = input("Enter your name: ")
+print("Hello", name)
+
+It waits for the user to type something and stores it in a variable.
+
+
+
+---
+
+2. What is the difference between == and =?
+
+= is assignment (stores a value in a variable).
+
+
+x = 5   # assigns 5 to x
+
+== is comparison (checks if two values are equal).
+
+
+if x == 5:  # true if x equals 5
+    print("Yes")
+
+
+---
+
+3. What is a chatbot?
+
+A chatbot is a computer program that simulates conversation with humans.
+
+It can be rule-based (fixed responses to patterns) or AI-based (uses NLP and ML).
+
+
+
+---
+
+4. What is the limitation of rule-based bots?
+
+They only respond to predefined patterns.
+
+They can’t understand context, slang, or unexpected phrasing.
+
+Example: Bot may understand "hello", but not "hey, what's up?" unless explicitly coded.
+
+
+
+---
+
+5. How can you exit a loop on command?
+
+Use the break statement when a condition is met.
+Example from chatbot:
+
+
+if "bye" in user_input:
+    break
+
+
+---
+
+6. What’s the use of lower()?
+
+Converts text to lowercase, so the bot can match words without case sensitivity.
+
+
+"Hello".lower()  # "hello"
+
+This way, "HELLO" and "hello" are treated the same.
+
+
+---
+
+7. How would you handle multiple intents?
+
+Check for multiple keywords in one input:
+
+
+if "weather" in user_input and "today" in user_input:
+    return "It looks sunny today!"
+
+Or allow multiple matches and prioritize responses.
+
+
+
+---
+
+8. How would you test this?
+
+Run the script and try different user inputs (unit testing).
+
+Write test cases with expected input → output.
+Example:
+
+Input: "hello" → Expected: "Hello! How can I help you today?"
+
+
+
+---
+
+9. How to organize code better?
+
+Break logic into functions (chatbot_response, main).
+
+Use a dictionary of patterns → responses instead of many if-else.
+Example:
+
+
+responses = {
+    "hello": "Hi there!",
+    "bye": "Goodbye!"
+}
+
+This makes the bot easier to update.
+
+
+
+---
+
+10. How can this evolve into an ML bot?
+
+Instead of fixed rules, use Natural Language Processing (NLP) and Machine Learning:
+
+Train a model on conversation data (using libraries like NLTK, spaCy, Hugging Face).
+
+Use intent classification to detect what the user wants.
+
+Use chatbot frameworks (Rasa, ChatterBot, Dialogflow).
+
+
+This way, the bot learns to handle more natural and varied input.
+
+
+
+Break logic into functions (chatbot_response, main).
+
+Use a dictionary of patterns → responses instead of many if-else.
+Example:
+
+
+responses = {
+    "hello": "Hi there!",
+    "bye": "Goodbye!"
+}
+
+This makes the bot easier to update.
+
+
+
+
+
+
